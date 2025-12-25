@@ -7,9 +7,14 @@ dotenv.config();
 const port = process.env.EXPRESS_PORT;
 dotenv.config();
 
-app.get('/',(req,res)=>{
-    res.send({"test" : "hello"})
-})
+app.use(express.json());
+require("./connection/connection");
+
+const AuthRoutes = require('./routes/user');
+app.use('/auth', AuthRoutes);
+
+const VideoRoutes = require('./routes/video');
+app.use('/video', VideoRoutes);
 
 app.listen(port, ()=>{
     console.log("Server is listening");
